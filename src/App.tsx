@@ -10,10 +10,19 @@ function App() {
   const [contador, setContador] = useState(0);
   const [lista, setLista] = useState<string[]>([]);
   const [todo, setTodo] = useState("");
+  const [buscar, setBuscar] = useState("");
   // useEffect
-  useEffect(() => {
-    console.log("useEffect");
-  }, [lista]);
+  // useEffect(() => {
+    
+  // }, []);
+  const listaPrototipo =[
+    "h",
+    "palabra",
+    "otra",
+    "hola",
+    "mundo",
+    "adios",
+  ]
   const sumar = () => {
     setContador(contador + 1);
   };
@@ -51,6 +60,17 @@ function App() {
         <Typography fontSize={24} fontStyle={"comic sans"}>
           To-do list
         </Typography>
+        <TextField variant="outlined" label="Buscar" onChange={(e) => {
+          setBuscar(e.target.value);
+          if(lista.length > 0){
+            lista.filter((item, i) => {
+              if(item === buscar){
+                toast.info(`Palabra encontrada: ${buscar}`);
+              }
+            })
+          }
+        }}/>
+
         <Box
           sx={{ padding: 10, display: "flex", justifyContent: "space-between" }}
         >
