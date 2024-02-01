@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "@mui/material";
+import { Button, Typography, Box, TextField, Paper } from "@mui/material";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   // let contador = 0;
@@ -17,26 +19,65 @@ function App() {
   };
   const agregarALista = (param: string) => {
     setLista([...lista, todo]);
+    toast.success("Agregado a la lista!");
   };
   const eliminar = (index: number) => {
     setLista(lista.filter((item, i) => i !== index));
+    toast.info("tarea eliminada!");
   };
   return (
-    <div className="App">
-      {/* mision aprender sobre useEffect y useState */}
-      <h1>React Hooks</h1>
-      <h2>useEffect</h2>
-      {/* <input type="text" />
-      <button onClick={agregarALista()}>{contador}</button> */}
-      <input type="text" onChange={(e) => setTodo(e.target.value)} />
-      <button onClick={() => agregarALista(todo)}>Agregar a la lista</button>
-      {lista.map((item, index) => (
-        <div>
-          <p key={index}>{item}</p>
-          <button onClick={() => eliminar(index)}>X</button>
-        </div>
-      ))}
-    </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      height="100vh"
+      bgcolor="#224944"
+    >
+      <Paper className="App" elevation={10} sx={{ padding: 10 }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
+        <Typography fontSize={24} fontStyle={"comic sans"}>
+          To-do list
+        </Typography>
+        <Box
+          sx={{ padding: 10, display: "flex", justifyContent: "space-between" }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Outlined"
+            variant="outlined"
+            onChange={(e) => setTodo(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            onClick={() => agregarALista(todo)}
+            sx={{ marginLeft: 2 }}
+          >
+            Agregar a la lista
+          </Button>
+        </Box>
+        {lista.map((item, index) => (
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography key={index}>{item}</Typography>
+            <Button variant="outlined" onClick={() => eliminar(index)}>
+              X
+            </Button>
+          </Box>
+        ))}
+      </Paper>
+    </Box>
   );
 }
 
